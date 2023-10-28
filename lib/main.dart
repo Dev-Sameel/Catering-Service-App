@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:uuid/uuid.dart';
 
+import 'Screens/main_screens/splash_screen.dart';
 import 'chat/helprer/firebase_helper.dart';
 import 'chat/model/user_model.dart';
 
@@ -38,7 +39,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return   GetMaterialApp(
       title: 'Flutter Demo',
-      home: AHomePage(),
+      home: SplashScreen(),
       debugShowCheckedModeBanner: false,
     );
   }

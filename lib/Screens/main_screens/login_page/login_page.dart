@@ -1,8 +1,10 @@
+import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../Refactoring/firebase/variables.dart';
 import '../../../Refactoring/methods/others.dart';
@@ -40,10 +42,20 @@ class LoginPage extends StatelessWidget {
           adminQuerySnapshot.docs.isNotEmpty) {
         if (userQuerySnapshot.docs.isNotEmpty) {
           String userId = userQuerySnapshot.docs.first.id;
-
+          SharedPreferences sharedPreferences =
+              await SharedPreferences.getInstance();
+          await sharedPreferences.setString('splashKey', 'bHome');
+          await sharedPreferences.setString('uID',userId);
+          log(sharedPreferences.getString('uID').toString());
+          log(sharedPreferences.getString('splashKey').toString());
+          
           Get.offAll(() => HomeScreen(uID: userId));
         }
         if (adminQuerySnapshot.docs.isNotEmpty) {
+          SharedPreferences sharedPreferences =
+              await SharedPreferences.getInstance();
+          await sharedPreferences.setString('splashKey', 'aHome');
+          log(sharedPreferences.getString('splashKey').toString());
           Get.offAll(() => const AHomePage());
         }
         Get.snackbar('success', 'Successfully Login', backgroundColor: kWhite);
@@ -148,10 +160,13 @@ class LoginPage extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         const Text("Don't have an account?"),
-                        CustomTextButton(onPressed: (){
-                          Get.to(() => BoyReg());
-                        }, color: kOrange, tSize:  mHeight / 44, text: 'Register')
-                       
+                        CustomTextButton(
+                            onPressed: () {
+                              Get.to(() => BoyReg());
+                            },
+                            color: kOrange,
+                            tSize: mHeight / 44,
+                            text: 'Register')
                       ],
                     ),
                   ],
