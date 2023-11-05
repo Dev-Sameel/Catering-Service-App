@@ -1,7 +1,7 @@
 import 'dart:developer';
 
-
-
+import 'package:catering/Refactoring/methods/others.dart';
+import 'package:catering/Refactoring/widgets/others.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -12,7 +12,8 @@ import '../widgets/elevated_button.dart';
 import '../widgets/text_field.dart';
 import 'sizedbox.dart';
 
-Future addBusFire(String? uID, int? index, int value) async {
+Future addBusFire(
+    String? uID, int? index, int value, BuildContext context) async {
   final user = await userRegCollection.doc(uID).get();
   List<Map<String, dynamic>> currentConfirmedWorks =
       List<Map<String, dynamic>>.from(user.get('confirmedWork') ?? []);
@@ -20,7 +21,7 @@ Future addBusFire(String? uID, int? index, int value) async {
   await userRegCollection
       .doc(uID)
       .update({'confirmedWork': currentConfirmedWorks});
-      Get.back();
+  Navigator.pop(context);
 }
 
 baseFareDialog(BuildContext context, String? uID, int? index) {
@@ -32,26 +33,55 @@ baseFareDialog(BuildContext context, String? uID, int? index) {
     context: context,
     builder: (context) {
       return AlertDialog(
-        content: SizedBox(
-          height: 190,
+        contentPadding: EdgeInsets.all(0),
+        backgroundColor: kTransperant,
+        content:  Container(
+         height: 250,
+          padding: const EdgeInsets.all(10.0),
+        decoration: BoxDecoration(
+          
+            gradient:orangeGradient
+            ,
+            
+            borderRadius: BorderRadius.circular(20.0),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.2),
+                spreadRadius: 5,
+                blurRadius: 7,
+              ),
+            ],
+          ),
           child: Column(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              const Text('Home to Site Expense\n---------------',style: TextStyle(fontSize: 15,fontWeight: FontWeight.w500,color: kRed),textAlign: TextAlign.center,),
-              sBoxH20(),
+              const Text(
+                'Home to Site Expense\n---------------',
+                style: TextStyle(
+                    fontSize: 18, fontWeight: FontWeight.bold, color: kWhite),
+                textAlign: TextAlign.center,
+              ),
               CustomTextField(
+                icon: Icons.attach_money,
                 label: 'Enter Bus Fare',
-                enableColor: Colors.grey,
-                focusColor: kBlack,
-                textColor: kBlack,
+                fiilColor: kBlack
+          .withOpacity(0.3),
                 controller: fareController,
                 textType: TextInputType.number,
               ),
-              sBoxH20(),
               //  confirmButton('ADD', 'cancel',kBlack,kWhite)
               ConfireButton(
                 label: 'Add',
                 onChanged: () {
-                  addBusFire(uID, index, int.parse(fareController.text));
+                  if (fareController.text.isNotEmpty) {
+                    addBusFire(
+                        uID, index, int.parse(fareController.text), context);
+                  }
+                  else
+                  {
+                    getxSnakBar('Alert', 'Please Enter BusFare', null);
+                  }
                 },
               )
             ],

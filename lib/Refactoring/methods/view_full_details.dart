@@ -1,5 +1,11 @@
+
+
+import 'dart:developer';
+
+import 'package:catering/Refactoring/methods/others.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../../model/add_work_model.dart';
 import '../firebase/variables.dart';
 import '../styles/colors.dart';
@@ -21,9 +27,10 @@ Future<dynamic> viewFullDetails(AddWorkModel data,int? index,String? uid) async{
       middleTextStyle:
           const TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
       actions: [
-        Padding(
-          padding: const EdgeInsets.all(10),
+        Container(
+          constraints: BoxConstraints(maxWidth: Get.width * 0.8),
           child: Column(
+             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
              
@@ -31,7 +38,13 @@ Future<dynamic> viewFullDetails(AddWorkModel data,int? index,String? uid) async{
                
                 children: [
                 tileText('Location :', 19, FontWeight.w500, kBlack),
-                IconButton(onPressed: (){}, icon: const Icon(Icons.location_on,size: 45,color: kRed,))
+               data.locationMap=='Location Not Added'?Text(' Map Not Added',style: TextStyle(color: kRed),): IconButton(onPressed: (){
+                  
+             
+                // ignore: deprecated_member_use
+                launch(data.locationMap);
+            
+                }, icon: const Icon(Icons.location_on,size: 45,color: kRed,))
               ],),
               doubleText('Site Time', data.siteTime),
               doubleText('Date', data.date),

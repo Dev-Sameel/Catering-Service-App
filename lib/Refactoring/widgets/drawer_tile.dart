@@ -1,15 +1,16 @@
 import 'dart:developer';
 
+import 'package:catering/Refactoring/methods/others.dart';
 import 'package:catering/main.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
-import '../../Screens/admin_side/a_chat.dart';
 import '../../Screens/boys_side/drawer/confirmed/confirmed.dart';
-import '../../Screens/boys_side/drawer/my_profile.dart';
-import '../../chat/model/chat_room_model.dart';
-import '../../chat/screens/chat_room_page.dart';
+import '../../Screens/boys_side/drawer/boy_profile.dart';
+import '../../Screens/chat/model/chat_room_model.dart';
+import '../../Screens/chat/screens/chat_room_page.dart';
 import '../../model/user.dart';
 import '../methods/edit_password.dart';
 import '../methods/logout_box.dart';
@@ -17,6 +18,7 @@ import '../styles/colors.dart';
 
 // ignore: must_be_immutable
 class DrawerTile extends StatelessWidget {
+  var userData;
   final String adminId = 'wzaxXP0cddR3k9KXVmsV';
   String? uId;
   Map<String, dynamic>? data;
@@ -64,10 +66,22 @@ class DrawerTile extends StatelessWidget {
     return chatRoom;
   }
 
+ 
+
   @override
   Widget build(BuildContext context) {
-    // UserData? userData=UserData.fromJson(data, null);
-    // log(userData.name);
+    
+    try {
+      if (data != null) {
+        UserData userData = UserData.fromJson(data!, uId);
+        log(userData.password.toString());
+        log(userData.bloodGroup.toString());
+      }
+    } catch (e) {
+      if (kDebugMode) {
+        print('Error parsing document: $e');
+      }
+    }
     return Column(
       children: [
         ListTile(
@@ -82,6 +96,7 @@ class DrawerTile extends StatelessWidget {
           onTap: () async {
             if (id == 1) {
               Get.to(() => MyProfile(
+                     uId:data?['id']??'',
                     name: data?['name'] ?? '',
                     address: data?['address'] ?? '',
                     dob: data?['dob'] ?? '',
@@ -103,15 +118,15 @@ class DrawerTile extends StatelessWidget {
               }
             } else if (id == 5) {
               UserData? userData = UserData.fromJson(data!, null);
-              String userId=uId!;
+              String userId = uId!;
               ChatRoomModel? chatRoomModel = await getChatRoomModel(userId);
               if (chatRoomModel != null) {
                 Get.to(() => ChatRoomPage(
-                  side: 'user',
-                  targetUser: userData,
-                  chatRoom: chatRoomModel,
-                  // firebaseUser: widget.firebaseUser,
-                  adminId: adminId));
+                    side: 'user',
+                    targetUser: userData,
+                    chatRoom: chatRoomModel,
+                    // firebaseUser: widget.firebaseUser,
+                    adminId: adminId));
               }
               // Get.to(() => const AChat());
             } else if (id == 6) {

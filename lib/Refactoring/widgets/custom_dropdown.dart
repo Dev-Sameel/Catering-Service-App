@@ -15,10 +15,11 @@ class CustomDropDown extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       // width: double.infinity,
+      margin: EdgeInsets.only(bottom: 19),
       decoration: BoxDecoration(
         color: kBlack
         .withOpacity(0.3),
-        border: Border.all(color: cFire),
+        border: Border.all(color: kWhite,width: 1.5),
         borderRadius: const BorderRadius.only(topLeft: Radius.circular(50),topRight: Radius.circular(50),bottomRight: Radius.circular(50)),
       ),
       child: Container(
@@ -36,10 +37,11 @@ class CustomDropDown extends StatelessWidget {
                     onChanged: (value) {
                       controller.updateSelectedValue(value);
                     },
-                    dropdownColor: kBlack,
+                    dropdownColor: Color.fromARGB(255, 85, 22, 2),
+                    iconEnabledColor: kWhite,
                     borderRadius: BorderRadius.circular(10),
                     underline: const SizedBox(),
-                    hint: Text(label, style: const TextStyle(color: kWhite)),
+                    hint: Text(label, style:  TextStyle(color: kWhite.withOpacity(0.8))),
                     items: menuItems.map((e) {
                       return DropdownMenuItem<String>(
                         value: e,

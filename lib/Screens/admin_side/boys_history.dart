@@ -14,12 +14,12 @@ import '../../Refactoring/methods/tile_text.dart';
 import '../../Refactoring/styles/colors.dart';
 import '../../Refactoring/styles/container.dart';
 import '../../Refactoring/widgets/others.dart';
-import '../../chat/model/chat_room_model.dart';
-import '../../chat/screens/chat_room_page.dart';
+import '../chat/model/chat_room_model.dart';
+import '../chat/screens/chat_room_page.dart';
 import '../../controller/boys_history_controller.dart';
 import '../../controller/image_controller.dart';
 import '../../main.dart';
-import '../boys_side/drawer/my_profile.dart';
+import '../boys_side/drawer/boy_profile.dart';
 
 class BoysHistory extends StatefulWidget {
   const BoysHistory({super.key});
@@ -104,33 +104,7 @@ class _BoysHistoryState extends State<BoysHistory> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: bgColor,
-      // appBar: AppBar(
-      //   title: isSearching
-      //       ? CupertinoTextField(
-      //           onChanged: (query) {
-      //             setState(() {
-      //               _performSearch(query);
-      //             });
-      //           },
-      //           controller: _searchController,
-      //           placeholder: 'Search for a user',
-      //         )
-      //       : const Text('boys history'),
-      //   actions: [
-      //     IconButton(
-      //       onPressed: () {
-      //         setState(() {
-      //           isSearching = !isSearching;
-      //           if (!isSearching) {
-      //             _searchController.clear();
-      //             _performSearch('');
-      //           }
-      //         });
-      //       },
-      //       icon: isSearching ? const Icon(Icons.close) : const Icon(Icons.search),
-      //     )
-      //   ],
-      // ),
+
       appBar: customAppBar(    isSearching
        ? CupertinoTextField(
            onChanged: (query) {
@@ -180,7 +154,7 @@ class _BoysHistoryState extends State<BoysHistory> {
                       height: 110,
                     ),
                     Positioned(
-                      left: 40,
+                      left: 35,
                       top: 63,
                       child: Text(
                         'Total boys count: ${controller.users.length}',
@@ -201,148 +175,148 @@ class _BoysHistoryState extends State<BoysHistory> {
                   ],
                 ),
                 Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.all(15),
-                    child: GridView.builder(
-                        itemCount: _filteredUsers.length,
-                        gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 2,
-                                crossAxisSpacing: 20,
-                                mainAxisSpacing: 20),
-                        itemBuilder: (context, index) {
-                          final userDetails = _filteredUsers[index];
-                          return SizedBox(
-                            height: 200,
-                            width: 200,
-                            child: GestureDetector(
-                              onTap: () async {
-                                ChatRoomModel? chatRoomModel =
-                                    await getChatRoomModel(userDetails);
-                                if (chatRoomModel != null) {
-                                  Get.to(() => ChatRoomPage(
-                                        side: 'admin',
-                                        targetUser: userDetails,
-                                        chatRoom: chatRoomModel,
-                                        adminId: adminId,
-                                      ));
-                                }
-                              },
-                              child: Container(
-                                decoration: BoxDecoration(
-                                    color: bgColor, boxShadow: contShadow()),
-                                child: Column(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  children: [
-                                    Stack(
-                                      children: [
-                                        Align(
-                                          alignment: Alignment.center,
+                  child: GridView.builder(
+                      itemCount: _filteredUsers.length,
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 2,
+
+                              mainAxisSpacing: 5),
+                      itemBuilder: (context, index) {
+                        final userDetails = _filteredUsers[index];
+                        return SizedBox(
+                          height: 200,
+                          width: 200,
+                          child: GestureDetector(
+                            onTap: () async {
+                              ChatRoomModel? chatRoomModel =
+                                  await getChatRoomModel(userDetails);
+                              if (chatRoomModel != null) {
+                                Get.to(() => ChatRoomPage(
+                                      side: 'admin',
+                                      targetUser: userDetails,
+                                      chatRoom: chatRoomModel,
+                                      adminId: adminId,
+                                    ));
+                              }
+                            },
+                            child: Container(
+                              margin: EdgeInsets.all(15),
+                              decoration: BoxDecoration(
+                                  color: bgColor, boxShadow: contShadow()),
+                              child: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  Stack(
+                                    children: [
+                                      Align(
+                                        alignment: Alignment.center,
+                                        child: CircleAvatar(
+                                          radius: 38,
+                                          backgroundColor: kWhite,
                                           child: CircleAvatar(
-                                            radius: 38,
-                                            backgroundColor: kWhite,
-                                            child: CircleAvatar(
-                                              backgroundColor: bFire,
-                                              radius: 35,
-                                              child: ClipOval(
-                                                child: Image.network(
-                                                  userDetails.photo,
-                                                  width: double.infinity,
-                                                  height: double.infinity,
-                                                  fit: BoxFit.cover,
-                                                  loadingBuilder:
-                                                      (BuildContext context,
-                                                          Widget child,
-                                                          ImageChunkEvent?
-                                                              loadingProgress) {
-                                                    if (loadingProgress ==
-                                                        null) {
-                                                      return child;
-                                                    } else {
-                                                      return const Center(
-                                                        child:
-                                                            CircularProgressIndicator(),
-                                                      );
-                                                    }
-                                                  },
-                                                  errorBuilder: (BuildContext
-                                                          context,
-                                                      Object error,
-                                                      StackTrace? stackTrace) {
-                                                    return Image.asset(
-                                                      'assets/images/emptyDp.jpg',
-                                                      width: double.infinity,
-                                                      height: double.infinity,
-                                                      fit: BoxFit.cover,
+                                            backgroundColor: bgColor,
+                                            radius: 35,
+                                            child: ClipOval(
+                                              child: Image.network(
+                                                userDetails.photo,
+                                                width: double.infinity,
+                                                height: double.infinity,
+                                                fit: BoxFit.cover,
+                                                loadingBuilder:
+                                                    (BuildContext context,
+                                                        Widget child,
+                                                        ImageChunkEvent?
+                                                            loadingProgress) {
+                                                  if (loadingProgress ==
+                                                      null) {
+                                                    return child;
+                                                  } else {
+                                                    return const Center(
+                                                      child:
+                                                          CircularProgressIndicator(),
                                                     );
-                                                  },
-                                                ),
+                                                  }
+                                                },
+                                                errorBuilder: (BuildContext
+                                                        context,
+                                                    Object error,
+                                                    StackTrace? stackTrace) {
+                                                  return Image.asset(
+                                                    'assets/images/emptyDp.jpg',
+                                                    width: double.infinity,
+                                                    height: double.infinity,
+                                                    fit: BoxFit.cover,
+                                                  );
+                                                },
                                               ),
                                             ),
                                           ),
                                         ),
-                                        Positioned(
-                                          right: 0,
-                                          top: -15,
-                                          child: PopupMenuButton(
-                                            color: kWhite,
-                                            onSelected: (value) async {
-                                              value == 'profile'
-                                                  ? Get.to(() => MyProfile(
-                                                        name: userDetails.name,
-                                                        address:
-                                                            userDetails.address,
-                                                        dob: userDetails.dob,
-                                                        bloodGroup: userDetails
-                                                            .bloodGroup,
-                                                        photo:
-                                                            userDetails.photo,
-                                                        mobile:
-                                                            userDetails.mobile!,
-                                                      ))
-                                                  : deleteDialogBox(context,
-                                                      () {
-                                                      controller.deleteUserData(
-                                                          userDetails.id ?? '');
-                                                      imageController
-                                                          .deleteImageFromFirebase(
-                                                              userDetails
-                                                                  .photo);
-                                                      Get.back();
-                                                    });
-                                            },
-                                            itemBuilder: (context) {
-                                              return [
-                                                const PopupMenuItem(
-                                                  value: 'profile',
-                                                  child: Text(
-                                                    'Profile',
-                                                    style: TextStyle(
-                                                        color: bgColor),
-                                                  ),
+                                      ),
+                                      Positioned(
+                                        right: 0,
+                                        top: -15,
+                                        child: PopupMenuButton(
+                                          color: kWhite,
+                                          onSelected: (value) async {
+                                            value == 'profile'
+                                                ? Get.to(() => MyProfile(
+                                                  uId: 'asasasas',
+                                                  userData: userDetails,
+                                                      name: userDetails.name,
+                                                      address:
+                                                          userDetails.address,
+                                                      dob: userDetails.dob,
+                                                      bloodGroup: userDetails
+                                                          .bloodGroup,
+                                                      photo:
+                                                          userDetails.photo,
+                                                      mobile:
+                                                          userDetails.mobile!,
+                                                    ))
+                                                : deleteDialogBox(context,
+                                                    () {
+                                                    controller.deleteUserData(
+                                                        userDetails.id ?? '');
+                                                    imageController
+                                                        .deleteImageFromFirebase(
+                                                            userDetails
+                                                                .photo);
+                                                    Get.back();
+                                                  });
+                                          },
+                                          itemBuilder: (context) {
+                                            return [
+                                              const PopupMenuItem(
+                                                value: 'profile',
+                                                child: Text(
+                                                  'Profile',
+                                                  style: TextStyle(
+                                                      color: bgColor),
                                                 ),
-                                                const PopupMenuItem(
-                                                  value: 'delete',
-                                                  child: Text('Delete',
-                                                      style: TextStyle(
-                                                          color: bgColor)),
-                                                )
-                                              ];
-                                            },
-                                          ),
+                                              ),
+                                              const PopupMenuItem(
+                                                value: 'delete',
+                                                child: Text('Delete',
+                                                    style: TextStyle(
+                                                        color: bgColor)),
+                                              )
+                                            ];
+                                          },
                                         ),
-                                      ],
-                                    ),
-                                    tileText(capitalize(userDetails.name), 19,
-                                        FontWeight.bold, kWhite),
-                                  ],
-                                ),
+                                      ),
+                                    ],
+                                  ),
+                                  tileText(capitalize(userDetails.name), 19,
+                                      FontWeight.bold, kWhite),
+                                ],
                               ),
                             ),
-                          );
-                        }),
-                  ),
+                          ),
+                        );
+                      }),
                 ),
               ],
             );

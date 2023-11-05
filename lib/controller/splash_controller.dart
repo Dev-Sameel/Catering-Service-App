@@ -35,7 +35,7 @@ class SplashController extends GetxController {
     final userLogged = sharedPrefs.getString('splashKey');
     log(sharedPrefs.getString('splashKey').toString());
     if (userLogged == 'logOut'||userLogged==null) {
-      log('keeeeeeeeeeeeeeeeeeeeeyyyyyyyyyyyyyyyyy${sharedPrefs.getString('splashKey').toString()}');
+      log('key value${sharedPrefs.getString('splashKey').toString()}');
       log(sharedPrefs.getString('splashKey').toString());
       gotoLogin();
     } else {

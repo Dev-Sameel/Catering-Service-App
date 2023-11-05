@@ -55,4 +55,6 @@ class WorkHistoryController extends GetxController {
   deleteWorkData(String id) {
     addWorkCollection.doc(id).delete();
   }
+
+  
 }

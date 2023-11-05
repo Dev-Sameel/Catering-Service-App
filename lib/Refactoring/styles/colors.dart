@@ -53,7 +53,7 @@ const confirmButtonGradient = LinearGradient(
 
 LinearGradient costumGradient(AlignmentGeometry begin, AlignmentGeometry end) {
   return LinearGradient(
-    colors: const [aFire, bFire],
+    colors: const [aFire, Color.fromRGBO(245, 124, 11, 1)],
     begin: begin,
     end: end,
   );
@@ -81,3 +81,12 @@ const youGradient = LinearGradient(colors: [
  Color.fromARGB(255, 255, 159, 81),
    
 ]);
+
+
+const orangeGradient = RadialGradient(
+  center: Alignment.topCenter,
+  radius: 3,
+  colors: [  Color.fromARGB(255, 255, 113, 70),
+  Color.fromARGB(255, 255, 173, 105),
+  Color.fromARGB(255, 255, 227, 185)],
+);

@@ -1,6 +1,5 @@
 import 'dart:developer';
 
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:flutter/material.dart';
@@ -50,9 +49,9 @@ class HomeScreen extends StatelessWidget {
     // log(userSkillsDoc.data().toString());
 
     if (userSkillsDoc.exists) {
-       List<Map<String, dynamic>> currentConfirmedWorks =
-            List<Map<String, dynamic>>.from(
-                userSkillsDoc.get('confirmedWork') ?? []);
+      List<Map<String, dynamic>> currentConfirmedWorks =
+          List<Map<String, dynamic>>.from(
+              userSkillsDoc.get('confirmedWork') ?? []);
       log(currentConfirmedWorks.toString());
       // ignore: unused_local_variable
       var count = 0;
@@ -76,7 +75,6 @@ class HomeScreen extends StatelessWidget {
             'Alert', "You can't attend two works on the same day", null);
       } else {
         await workDialogBoxFirst(data, uID!, workId);
-       
       }
     } else {
       log('User document does not exist for ID: $uID');
@@ -95,7 +93,7 @@ class HomeScreen extends StatelessWidget {
       'Logout',
     ];
     List<String> imagePaths = [
-      'assets/images/Icons/profile.png',
+      'assets/images/Icons/name.png',
       'assets/images/Icons/confirmed.png',
       'assets/images/Icons/editpass.png',
       'assets/images/Icons/leave.png',
@@ -133,7 +131,7 @@ class HomeScreen extends StatelessWidget {
                         id: 2,
                         imagePaths: imagePaths[1]),
                     DrawerTile(
-                      uId: uID,
+                        uId: uID,
                         title: titleMessage[2],
                         id: 3,
                         imagePaths: imagePaths[2]),
@@ -142,8 +140,8 @@ class HomeScreen extends StatelessWidget {
                         id: 4,
                         imagePaths: imagePaths[3]),
                     DrawerTile(
-                      uId: uID,
-                      data: data,
+                        uId: uID,
+                        data: data,
                         title: titleMessage[4],
                         id: 5,
                         imagePaths: imagePaths[4]),
@@ -173,7 +171,7 @@ class HomeScreen extends StatelessWidget {
           ),
         ),
         backgroundColor: const Color.fromARGB(255, 20, 20, 21),
-        title: const Text('Home'),
+        title: const Text('HOME'),
         centerTitle: true,
       ),
       body: ScrollConfiguration(
@@ -198,7 +196,7 @@ class HomeScreen extends StatelessWidget {
                 itemBuilder: (context, index) {
                   final workDetails = controller.works[index];
                   final tileColor =
-                      index % 2 == 0 ? greenGradient : redGradient;
+                      workDetails.vacancy <= 0 ? redGradient : greenGradient;
                   return Container(
                     height: 90,
                     margin: const EdgeInsets.only(left: 30, right: 30, top: 25),
@@ -206,67 +204,67 @@ class HomeScreen extends StatelessWidget {
                     child: Center(
                       child: Stack(
                         children: [
-                          ListTile(
-                            onTap: () {
-                              checkAttendedWork(workDetails.code, workDetails,
-                                  workDetails.id.toString());
-                              // log(workDetails.id.toString());
-                              // workDialogBoxFirst(workDetails,uID!,workDetails.id.toString());
-                            },
-                            title: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                tileText(workDetails.date, 20, FontWeight.w500,
-                                    kWhite),
-                                tileText(
-                                    '${workDetails.teamName} - ${workDetails.boysCount}',
-                                    18,
-                                    FontWeight.w500,
-                                    kWhite)
-                              ],
-                            ),
-                            trailing: FittedBox(
-                              fit: BoxFit.fill,
-                              child: Column(
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 10),
+                            child: ListTile(
+                              onTap: () {
+                                checkAttendedWork(workDetails.code, workDetails,
+                                    workDetails.id.toString());
+                                // log(workDetails.id.toString());
+                                // workDialogBoxFirst(workDetails,uID!,workDetails.id.toString());
+                              },
+                              title: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
                                 children: [
-                                  tileText(workDetails.code, 35,
+                                  tileText(workDetails.date, 20,
                                       FontWeight.w500, kWhite),
-                                  tileText(workDetails.siteTime, 18,
+                                  tileText(capitalize(workDetails.teamName), 18,
                                       FontWeight.w500, kWhite),
+                                  tileText(
+                                      'Vacancy : ${workDetails.vacancy}',
+                                      18,
+                                      FontWeight.w500,
+                                      kWhite)
                                 ],
+                              ),
+                              trailing: FittedBox(
+                                fit: BoxFit.fill,
+                                child: Column(
+                                  children: [
+                                    tileText(workDetails.code, 35,
+                                        FontWeight.w500, kWhite),
+                                    tileText(workDetails.siteTime, 18,
+                                        FontWeight.w500, kWhite),
+                                   
+                                  ],
+                                ),
                               ),
                             ),
                           ),
-                          index % 2 != 0
-                              ? Stack(
-                                  children: [
-                                    InkWell(
-                                      onTap: () => getxSnakBar(
-                                          'Alert⚠', 'This work is full', null),
-                                      child: Container(
+                          workDetails.vacancy <= 0
+                              ? InkWell(
+                                  onTap: () => getxSnakBar(
+                                      'Alert⚠', 'This work is full', null),
+                                  child: Stack(
+                                    children: [
+                                      Container(
                                         height: 90,
                                         decoration: BoxDecoration(
                                             color: kBlack.withOpacity(0.3),
                                             borderRadius:
                                                 BorderRadius.circular(10)),
                                       ),
-                                    ),
-                                    Align(
-                                        alignment: Alignment.center,
-                                        child: Icon(
-                                          Icons.lock,
-                                          color: const Color.fromARGB(
-                                              255, 255, 255, 255),
-                                          size: 60,
-                                          shadows: [
-                                            Shadow(
-                                                color: kRed.withOpacity(0.7),
-                                                blurRadius: 30,
-                                                offset: const Offset(3, 4))
-                                          ],
-                                        )),
-                                  ],
+                                      const Align(
+                                          alignment: Alignment.center,
+                                          child: Image(
+                                            image: AssetImage(
+                                                'assets/images/lock.png'),
+                                            width: 40,
+                                          )),
+                                    ],
+                                  ),
                                 )
                               : const Icon(null)
                         ],

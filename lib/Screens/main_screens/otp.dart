@@ -6,11 +6,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pinput/pinput.dart';
 
-import '../Refactoring/firebase/variables.dart';
-import '../Refactoring/methods/image_text.dart';
-import '../Screens/main_screens/login_page/login_page.dart';
-import '../controller/image_controller.dart';
-import '../model/user.dart';
+import '../../Refactoring/firebase/variables.dart';
+import '../../Refactoring/methods/image_text.dart';
+import 'login_page/login_page.dart';
+import '../../controller/image_controller.dart';
+import '../../model/user.dart';
 
 // ignore: must_be_immutable
 class OtpPage extends StatefulWidget {
@@ -63,7 +63,6 @@ class _OtpPageState extends State<OtpPage> {
       bloodGroup: widget.dropdown,
       mobile: int.parse(widget.mobile),
       password: int.parse(widget.password),
-      
     );
 
     // var userData = UserData(
@@ -85,16 +84,16 @@ class _OtpPageState extends State<OtpPage> {
     // return id;
     // await userRegCollection.add(userData.toJson());
     // Get.offAll(()=>LoginPage());
-    DocumentReference docRef = await userRegCollection.add(addUserData.toJson());
+    DocumentReference docRef =
+        await userRegCollection.add(addUserData.toJson());
 
-  // Update the id field in addUserData with the generated document ID
-  await docRef.update({'id': docRef.id});
+    // Update the id field in addUserData with the generated document ID
+    await docRef.update({'id': docRef.id});
 
-  // Now addUserData contains the generated ID
-  addUserData.id = docRef.id;
+    // Now addUserData contains the generated ID
+    addUserData.id = docRef.id;
 
-  return docRef.id;
-    
+    Get.offAll(LoginPage());
   }
 
   @override
@@ -117,12 +116,10 @@ class _OtpPageState extends State<OtpPage> {
       PhoneAuthCredential creds = PhoneAuthProvider.credential(
           verificationId: verificationId, smsCode: userOtp);
       // User? user = (await auth.signInWithCredential(creds)).user;
-        UserCredential userCredential = await auth.signInWithCredential(creds);
-    User? user = userCredential.user;
+      UserCredential userCredential = await auth.signInWithCredential(creds);
+      User? user = userCredential.user;
       if (user != null) {
-        final id = await addBoyData();
-
-        Get.offAll(LoginPage());
+        await addBoyData();
       }
     } on FirebaseAuthException catch (e) {
       Get.snackbar(
@@ -144,7 +141,6 @@ class _OtpPageState extends State<OtpPage> {
       );
     }
   }
-
 
   final ButtonStyle style = ElevatedButton.styleFrom(
       minimumSize: const Size(188, 48),

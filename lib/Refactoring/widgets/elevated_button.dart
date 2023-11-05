@@ -125,8 +125,10 @@ class ConfireButton extends StatelessWidget {
     final mWidth = MediaQuery.of(context).size.width;
     final mHeight = MediaQuery.of(context).size.height;
     return Container(
+      margin: EdgeInsets.only(bottom: 19),
       decoration: BoxDecoration(
-          gradient: buttonGradient2, borderRadius: BorderRadius.circular(50)),
+        
+          color: bgColor, borderRadius: BorderRadius.circular(50)),
       width: mWidth * 0.3,
       height: mHeight * 0.06,
       child: ElevatedButton(
@@ -175,7 +177,7 @@ class CustomEButton2 extends StatelessWidget {
             backgroundColor: MaterialStatePropertyAll(kTransperant),
             shadowColor: MaterialStatePropertyAll(kTransperant),
             overlayColor: MaterialStatePropertyAll(kTransperant)),
-        child: Text('Loggin',
+        child: Text('Login',
             style: TextStyle(
                 color: kWhite,
                 fontWeight: FontWeight.bold,

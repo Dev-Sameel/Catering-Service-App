@@ -1,7 +1,8 @@
-
+import 'package:catering/Refactoring/widgets/others.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pinput/pinput.dart';
 
 import '../../Refactoring/firebase/variables.dart';
 import '../../Refactoring/methods/app_bar_cuper.dart';
@@ -14,6 +15,7 @@ import '../../model/admin.dart';
 import 'a_home.dart';
 
 class EditProfile extends StatelessWidget {
+  
   EditProfile({super.key});
 
   final AdminController controller = Get.put(AdminController());
@@ -37,7 +39,10 @@ class EditProfile extends StatelessWidget {
           var documentSnapshot = querySnapshot.docs[0];
           documentId = documentSnapshot.id;
         } else {
-          getxSnakBar('Error', 'There are zero or more than one document in the collection.', null);
+          getxSnakBar(
+              'Error',
+              'There are zero or more than one document in the collection.',
+              null);
         }
         var updatedAdminDetails = Admin(
             name: nameController.text,
@@ -60,6 +65,7 @@ class EditProfile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    
     return Scaffold(
       backgroundColor: bgColor,
       appBar: customAppBar(null, null, null, 'EDIT PROFILE'),
@@ -81,59 +87,77 @@ class EditProfile extends StatelessWidget {
             phoneController.text = adminDetails.phone.toString();
             return Center(
               child: Container(
-                margin: const EdgeInsets.symmetric(horizontal: 50),
-                height: 350,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    CustomTextField(
-                        fiilColor: kBlack.withOpacity(0.3),
-                        controller: nameController,
-                        icon: Icons.movie_edit,
-                        label: 'Enter Name',
-                        showLabel: false,
-                        showHintText: true),
-                    const SizedBox(
-                      height: 10,
+                decoration: BoxDecoration(
+                  gradient: orangeGradient,
+                  borderRadius: BorderRadius.circular(20.0),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.2),
+                      spreadRadius: 5,
+                      blurRadius: 7,
                     ),
-                    CustomTextField(
-                        fiilColor: kBlack.withOpacity(0.3),
-                        length: 10,
-                        controller: phoneController,
-                        icon: Icons.phone,
-                        label: 'Phone Number',
-                        textType: TextInputType.number,
-                        showLabel: false,
-                        showHintText: true),
-                    CustomTextField(
-                        fiilColor: kBlack.withOpacity(0.3),
-                        length: 5,
-                        controller: oldPasswordController,
-                        icon: Icons.lock_open,
-                        label: 'Enter Old Password',
-                        textType: TextInputType.number),
-                    CustomTextField(
-                        fiilColor: kBlack.withOpacity(0.3),
-                        length: 5,
-                        controller: newPasswordController,
-                        icon: Icons.lock,
-                        label: 'Enter New Password',
-                        textType: TextInputType.number),
-                    ConfireButton(
-                        label: 'Update',
-                        onChanged: () {
-                          if (nameController.text.isNotEmpty &&
-                              phoneController.text.isNotEmpty &&
-                              oldPasswordController.text.isNotEmpty &&
-                              newPasswordController.text.isNotEmpty) {
-                            checkNameInFirestore(
-                                int.parse(oldPasswordController.text));
-                          } else {
-                            getxSnakBar(
-                                'Alert', 'Please fill all fields', null);
-                          }
-                        })
                   ],
+                ),
+                padding: const EdgeInsets.all(20.0),
+                margin: const EdgeInsets.all(20.0),
+                height: 400,
+                child: ScrollConfiguration(
+                  behavior: RemoveGlow(),
+                  child: ListView(
+                    itemExtent: 70.0,
+                    shrinkWrap: true,
+                    children: [
+                      CustomTextField(
+                          fiilColor: kBlack.withOpacity(0.3),
+                          controller: nameController,
+                          icon: Icons.movie_edit,
+                          label: 'Enter Name',
+                          showLabel: false,
+                          showHintText: true),
+                      CustomTextField(
+                          fiilColor: kBlack.withOpacity(0.3),
+                          length: 10,
+                          controller: phoneController,
+                          icon: Icons.phone,
+                          label: 'Phone Number',
+                          textType: TextInputType.number,
+                          showLabel: false,
+                          showHintText: true),
+                      CustomTextField(
+                          fiilColor: kBlack.withOpacity(0.3),
+                          length: 5,
+                          controller: oldPasswordController,
+                          icon: Icons.lock_open,
+                          label: 'Enter Old Password',
+                          textType: TextInputType.number),
+                      CustomTextField(
+                          fiilColor: kBlack.withOpacity(0.3),
+                          length: 5,
+                          controller: newPasswordController,
+                          icon: Icons.lock,
+                          label: 'Enter New Password',
+                          textType: TextInputType.number),
+                      ConfireButton(
+                          label: 'Update',
+                          onChanged: () {
+                            if (nameController.text.isNotEmpty &&
+                                phoneController.text.isNotEmpty &&
+                                oldPasswordController.text.isNotEmpty &&
+                                newPasswordController.text.isNotEmpty) {
+                              if (newPasswordController.length == 5) {
+                                checkNameInFirestore(
+                                    int.parse(oldPasswordController.text));
+                              } else {
+                                getxSnakBar(
+                                    'Alert', 'Must Enter 5 Digit Password', null);
+                              }
+                            } else {
+                              getxSnakBar(
+                                  'Alert', 'Please fill all fields', null);
+                            }
+                          })
+                    ],
+                  ),
                 ),
               ),
             );

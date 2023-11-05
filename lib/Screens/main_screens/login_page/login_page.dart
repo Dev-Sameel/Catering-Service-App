@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:catering/Screens/boys_side/registration_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:flutter/material.dart';
@@ -126,13 +127,13 @@ class LoginPage extends StatelessWidget {
                       controller: passwordController,
                       checkValue: 'password',
                     ),
-                    Align(
-                        alignment: Alignment.centerRight,
-                        child: CustomTextButton(
-                            color: bgColor,
-                            tSize: 15,
-                            text: 'Forgot Password?',
-                            onPressed: () {})),
+                    // Align(
+                    //     alignment: Alignment.centerRight,
+                    //     child: CustomTextButton(
+                    //         color: bgColor,
+                    //         tSize: 15,
+                    //         text: 'Forgot Password?',
+                    //         onPressed: () {})),
                     const SizedBox(height: 15),
                     CustomEButton2(
                         kHeight: mHeight,
@@ -162,7 +163,7 @@ class LoginPage extends StatelessWidget {
                         const Text("Don't have an account?"),
                         CustomTextButton(
                             onPressed: () {
-                              Get.to(() => BoyReg());
+                              Get.to(() => RegistrationScreen());
                             },
                             color: kOrange,
                             tSize: mHeight / 44,

@@ -5,6 +5,7 @@
 // String userDataToJson(AddWorkModel data) => json.encode(data.toJson());
 
 class AddWorkModel {
+  int vacancy;
   String teamName;
   String siteLocation;
   String siteTime;
@@ -13,10 +14,13 @@ class AddWorkModel {
   String date;
   String? id;
   String code;
+  String locationMap;
 
   AddWorkModel(
       {
       this.id,
+      required this.vacancy,
+      required this.locationMap,
       required this.code,
       required this.boysCount,
       required this.date,
@@ -29,14 +33,18 @@ class AddWorkModel {
       id: id,
       code: json['code'],
       boysCount: json['boysCount'],
+      vacancy: json['vacancy'],
       date: json['date'],
       siteLocation: json['siteLocation'],
       siteTime: json['siteTime'],
       teamName: json['teamName'],
-      workType: json['workType']
+      workType: json['workType'],
+      locationMap: json['locationMap']
       );
 
       Map<String, dynamic> toJson() => {
+        "vacancy":vacancy,
+        "locationMap":locationMap,
         "code":code,
         "boysCount":boysCount,
         "date":date,

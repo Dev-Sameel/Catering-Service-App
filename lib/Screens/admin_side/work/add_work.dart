@@ -1,6 +1,7 @@
 
 
 
+import 'package:catering/Refactoring/widgets/others.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../Refactoring/firebase/variables.dart';
@@ -20,6 +21,7 @@ import 'work_history.dart';
 class AddWork extends StatelessWidget {
   final teamNameController = TextEditingController();
   final codeController = TextEditingController();
+  final mapController = TextEditingController();
   final locationController = TextEditingController();
   final siteTimeController = TextEditingController();
   final boysCountController = TextEditingController();
@@ -31,6 +33,8 @@ class AddWork extends StatelessWidget {
 
   Future addWorkToFireStore() async {
     var workDetails = AddWorkModel(
+      vacancy: int.parse(boysCountController.text),
+      locationMap: 'Location Not Added',
         boysCount: int.parse(boysCountController.text),
         date: parseDateDrop(dateController.selectedDate.value!),
         code: codeController.text,
@@ -39,7 +43,7 @@ class AddWork extends StatelessWidget {
         teamName: teamNameController.text,
         workType: dropDownController.selectedValue.value);
     await addWorkCollection.add(workDetails.toJson());
-    Get.to(()=>WorkHistory());
+    Get.offAll(()=>WorkHistory());
   }
 
   @override
@@ -49,62 +53,84 @@ class AddWork extends StatelessWidget {
       backgroundColor: bgColor,
       appBar: customAppBar(null, null, null, 'ADD WORK'),
       body: Container(
+        decoration: BoxDecoration(
+            gradient:orangeGradient
+            ,
+            borderRadius: BorderRadius.circular(20.0),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.2),
+                spreadRadius: 5,
+                blurRadius: 7,
+              ),
+            ],
+          ),
+          padding: const EdgeInsets.all(20.0),
+          margin: const EdgeInsets.all(20.0),
+        child: ScrollConfiguration(
+          behavior: RemoveGlow(),
+          child: ListView(
+             itemExtent: 70.0,
+          shrinkWrap: true,
+            children: [
+              CustomTextField(fiilColor: kBlack
+          .withOpacity(0.3),
+                icon: Icons.event_note,
+                label: 'Team Name',
+                controller: teamNameController,
+              ),
+              CustomTextField(fiilColor: kBlack
+          .withOpacity(0.3),
+                icon: Icons.location_city,
+                label: 'Location Name',
+                controller: locationController,
+              ),
+                 CustomTextField(fiilColor: kBlack
+          .withOpacity(0.3),
+                icon: Icons.location_on,
+                label: 'Location Map',
+                controller: mapController,
+              ),
+              CustomTextField(fiilColor: kBlack
+          .withOpacity(0.3),
+                icon: Icons.timer,
+                label: 'Site Time',
+                controller: siteTimeController,
+              ),
+              CustomDropDown(
+                  menuItems: const ['BreakFast', 'Lunch', 'Dinner'],
+                  label: 'Select Work Type'),
         
-        height: MediaQuery.of(context).size.height/1.2,
-        margin: const EdgeInsets.symmetric(horizontal: 50),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            CustomTextField(fiilColor: kBlack
-        .withOpacity(0.3),
-              icon: Icons.event_note,
-              label: 'Team Name',
-              controller: teamNameController,
-            ),
-            CustomTextField(fiilColor: kBlack
-        .withOpacity(0.3),
-              icon: Icons.location_on,
-              label: 'Site Location',
-              controller: locationController,
-            ),
-            CustomTextField(fiilColor: kBlack
-        .withOpacity(0.3),
-              icon: Icons.timer,
-              label: 'Site Time',
-              controller: siteTimeController,
-            ),
-            CustomDropDown(
-                menuItems: const ['BreakFast', 'Lunch', 'Dinner'],
-                label: 'Select Work Type'),
-
-            CustomTextField(label: 'Work Id',controller: codeController,icon: Icons.numbers,fiilColor: kBlack
-        .withOpacity(0.3),),    
-            CustomTextField(
-              fiilColor: kBlack
-        .withOpacity(0.3),
-              icon: Icons.format_list_numbered,
-              label: 'Boys Count',
-              textType: TextInputType.number,
-              controller: boysCountController,
-            ),
-            CustomDatePicker(label: 'Date Of Birth'),
-            ConfireButton(
-                label: 'Add+',
-                onChanged: () async {
-                  if (siteTimeController.text.isNotEmpty &&
-                      teamNameController.text.isNotEmpty &&
-                      dateController.selectedDate.value != null &&
-                      dropDownController.selectedValue.value != '' &&
-                      codeController.text.isNotEmpty&&
-                      locationController.text.isNotEmpty &&
-                      boysCountController.text.isNotEmpty) {
-                    await addWorkToFireStore();
-                  } else {
-                    
-                    getxSnakBar('Alert', 'Please fill all fields', null);
-                  }
-                })
-          ],
+              CustomTextField(label: 'Work Id',controller: codeController,icon: Icons.numbers,fiilColor: kBlack
+          .withOpacity(0.3),),    
+              CustomTextField(
+                fiilColor: kBlack
+          .withOpacity(0.3),
+                icon: Icons.format_list_numbered,
+                label: 'Boys Count',
+                textType: TextInputType.number,
+                controller: boysCountController,
+              ),
+              CustomDatePicker(label: 'Date'),
+              ConfireButton(
+                
+                  label: 'ADD',
+                  onChanged: () async {
+                    if (siteTimeController.text.isNotEmpty &&
+                        teamNameController.text.isNotEmpty &&
+                        dateController.selectedDate.value != null &&
+                        dropDownController.selectedValue.value != '' &&
+                        codeController.text.isNotEmpty&&
+                        locationController.text.isNotEmpty &&
+                        boysCountController.text.isNotEmpty) {
+                      await addWorkToFireStore();
+                    } else {
+                      
+                      getxSnakBar('Alert', 'Please fill all fields', null);
+                    }
+                  })
+            ],
+          ),
         ),
       ),
     );

@@ -1,4 +1,6 @@
 
+import 'dart:developer';
+
 import 'package:catering/Refactoring/methods/others.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -7,13 +9,13 @@ import 'package:get/get.dart';
 
 
 class ConfirmedWorkController extends GetxController {
-  late RxList<Map<String, dynamic>> confirmedWorks;
-  late String uId;
+ RxList<Map<String, dynamic>> confirmedWorks = <Map<String, dynamic>>[].obs;
+  String uId = '';
 
   @override
   void onInit() {
     super.onInit();
-    confirmedWorks = <Map<String, dynamic>>[].obs;
+    // confirmedWorks = <Map<String, dynamic>>[].obs;
     getConfirmedWorks();
   }
 
@@ -23,6 +25,27 @@ class ConfirmedWorkController extends GetxController {
   }
 
 
+// void getConfirmedWorks() async {
+//   try {
+//     final DocumentSnapshot userSkillsDoc = await FirebaseFirestore.instance
+//         .collection('User Reg')
+//         .doc(uId)
+//         .get();
+
+//     if (userSkillsDoc.exists) {
+//      List<Map<String, dynamic>> currentConfirmedWorks =
+//             List<Map<String, dynamic>>.from(
+//                 userSkillsDoc.get('confirmedWork') ?? []);
+
+//         confirmedWorks.assignAll(currentConfirmedWorks);
+//     } else {
+//       getxSnakBar('Error', 'User document does not exist for ID: $uId', null);
+//     }
+//   } catch (e) {
+//     // Handle error
+//     getxSnakBar('Error', 'Error fetching confirmed works: $e', null);
+//   }
+// }
 void getConfirmedWorks() async {
   try {
     final DocumentSnapshot userSkillsDoc = await FirebaseFirestore.instance
@@ -31,17 +54,21 @@ void getConfirmedWorks() async {
         .get();
 
     if (userSkillsDoc.exists) {
-     List<Map<String, dynamic>> currentConfirmedWorks =
-            List<Map<String, dynamic>>.from(
-                userSkillsDoc.get('confirmedWork') ?? []);
+      List<Map<String, dynamic>> currentConfirmedWorks =
+          List<Map<String, dynamic>>.from(
+              userSkillsDoc.get('confirmedWork') ?? []);
 
-        confirmedWorks.assignAll(currentConfirmedWorks);
+      confirmedWorks.assignAll(currentConfirmedWorks);
     } else {
       getxSnakBar('Error', 'User document does not exist for ID: $uId', null);
     }
   } catch (e) {
     // Handle error
-    getxSnakBar('Error', 'Error fetching confirmed works: $e', null);
+    Future.delayed(Duration.zero, () {
+      // getxSnakBar('Error', 'Error fetching confirmed works: $e', null);
+      log('Error fetching confirmed works: $e');
+    });
   }
 }
+
 }

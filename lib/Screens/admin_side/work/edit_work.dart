@@ -1,6 +1,12 @@
 
 
+
+
+import 'dart:developer';
+
+import 'package:catering/Refactoring/widgets/others.dart';
 import 'package:catering/Screens/admin_side/work/work_history.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../../../Refactoring/firebase/variables.dart';
 import '../../../Refactoring/methods/app_bar_cuper.dart';
@@ -23,6 +29,7 @@ import '../../../controller/dropdown_controller.dart';
 // ignore: must_be_immutable
 class EditWork extends StatelessWidget {
   String code;
+  String locationMap;
   String id;
   String teamName;
   String location;
@@ -35,6 +42,7 @@ class EditWork extends StatelessWidget {
   final codeController = TextEditingController();
   final siteTimeController = TextEditingController();
   final boysCountController = TextEditingController();
+  final mapController = TextEditingController();
   final DatePickerController dateController = Get.put(DatePickerController());
 
   final CustomDropDownController dropDownController =
@@ -42,6 +50,7 @@ class EditWork extends StatelessWidget {
 
   EditWork({
     super.key,
+    required this.locationMap,
     required this.id,
     required this.code,
     required this.boysCount,
@@ -53,7 +62,14 @@ class EditWork extends StatelessWidget {
   });
 
   Future addWorkToFireStore() async {
+    final  workRef=await addWorkCollection.doc(id).get();
+    final workData=await workRef.data();
+    log('vacccaaacac${workData!['vacancy'].toString()}');
+    log('boysssssss${workData['boysCount'].toString()}');
+
     var updatedWorkDetails = AddWorkModel(
+      vacancy: workData['vacancy'],
+        locationMap: mapController.text,
         boysCount: int.parse(boysCountController.text),
         date: parseDateDrop(dateController.selectedDate.value!),
         siteLocation: locationController.text,
@@ -72,12 +88,14 @@ class EditWork extends StatelessWidget {
     dropDownController.selectedValue.value = '';
     boysCountController.text = '';
     dateController.selectedDate.value = null;
+    mapController.text='';
 
   }
 
   @override
   Widget build(BuildContext context) {
     codeController.text=code;
+    mapController.text=locationMap;
     teamNameController.text = teamName;
     locationController.text = location;
     siteTimeController.text = siteTime;
@@ -90,66 +108,90 @@ class EditWork extends StatelessWidget {
       backgroundColor: bgColor,
       appBar: customAppBar(null, null, null, 'EDIT WORK'),
       body: Container(
-        height: 500,
-        margin: const EdgeInsets.symmetric(horizontal: 50, vertical: 50),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            CustomTextField(
-              fiilColor: kBlack
-        .withOpacity(0.3),
-              icon: Icons.event_note,
-              label: 'Team Name',
-              controller: teamNameController,
-            ),
-            CustomTextField(
-              fiilColor: kBlack
-        .withOpacity(0.3),
-              icon: Icons.location_on,
-              label: 'Site Location',
-              controller: locationController,
-            ),
-            CustomTextField(
-              fiilColor: kBlack
-        .withOpacity(0.3),
-              icon: Icons.timer,
-              label: 'Site Time',
-              controller: siteTimeController,
-            ),
-            CustomDropDown(
-                menuItems: const ['BreakFast', 'Lunch', 'Dinner'],
-                label: 'Select Work Type'),
-                CustomTextField(fiilColor: kBlack
-        .withOpacity(0.3),label: 'Work Id',controller: codeController,icon: Icons.numbers,),  
-            CustomTextField(
-              fiilColor: kBlack
-        .withOpacity(0.3),
-              icon: Icons.format_list_numbered,
-              label: 'Boys Count',
-              textType: TextInputType.number,
-              controller: boysCountController,
-            ),
-            CustomDatePicker(label: 'Date Of Birth'),
-            ConfireButton(
-              
-                label: 'Update',
-                onChanged: () async {
-                   if (siteTimeController.text.isNotEmpty &&
-                      teamNameController.text.isNotEmpty &&
-                      dateController.selectedDate.value != null &&
-                      dropDownController.selectedValue.value != '' &&
-                      codeController.text.isNotEmpty&&
-                      locationController.text.isNotEmpty &&
-                      boysCountController.text.isNotEmpty) {
-                    await addWorkToFireStore();
-                  } else {
-                    
-                    getxSnakBar('Alert', 'Please fill all fields', null);
-                  }
-
-                 
-                })
-          ],
+          decoration: BoxDecoration(
+            gradient:orangeGradient
+            ,
+            borderRadius: BorderRadius.circular(20.0),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.2),
+                spreadRadius: 5,
+                blurRadius: 7,
+              ),
+            ],
+          ),
+          padding: const EdgeInsets.all(20.0),
+          margin: const EdgeInsets.all(20.0),
+        child: ScrollConfiguration(
+          behavior: RemoveGlow(),
+          child: ListView(
+             itemExtent: 70.0,
+          shrinkWrap: true,
+            children: [
+              CustomTextField(
+                fiilColor: kBlack
+          .withOpacity(0.3),
+                icon: Icons.event_note,
+                label: 'Team Name',
+                controller: teamNameController,
+              ),
+              CustomTextField(
+                fiilColor: kBlack
+          .withOpacity(0.3),
+                icon: Icons.location_on,
+                label: 'Location Name',
+                controller: locationController,
+              ),
+              CustomTextField(
+                fiilColor: kBlack
+          .withOpacity(0.3),
+                icon: Icons.location_on,
+                label: 'Location Map',
+                controller: mapController,
+              ),
+              CustomTextField(
+                fiilColor: kBlack
+          .withOpacity(0.3),
+                icon: Icons.timer,
+                label: 'Site Time',
+                controller: siteTimeController,
+              ),
+              CustomDropDown(
+                  menuItems: const ['BreakFast', 'Lunch', 'Dinner'],
+                  label: 'Select Work Type'),
+                  CustomTextField(fiilColor: kBlack
+          .withOpacity(0.3),label: 'Work Id',controller: codeController,icon: Icons.numbers,),  
+              CustomTextField(
+                fiilColor: kBlack
+          .withOpacity(0.3),
+                icon: Icons.format_list_numbered,
+                label: 'Boys Count',
+                textType: TextInputType.number,
+                controller: boysCountController,
+              ),
+              CustomDatePicker(label: 'Date Of Birth'),
+              ConfireButton(
+                
+                  label: 'Update',
+                  onChanged: () async {
+                     if (siteTimeController.text.isNotEmpty &&
+                     mapController.text.isNotEmpty&&
+                        teamNameController.text.isNotEmpty &&
+                        dateController.selectedDate.value != null &&
+                        dropDownController.selectedValue.value != '' &&
+                        codeController.text.isNotEmpty&&
+                        locationController.text.isNotEmpty &&
+                        boysCountController.text.isNotEmpty) {
+                      await addWorkToFireStore();
+                    } else {
+                      
+                      getxSnakBar('Alert', 'Please fill all fields', null);
+                    }
+        
+                   
+                  })
+            ],
+          ),
         ),
       ),
     );

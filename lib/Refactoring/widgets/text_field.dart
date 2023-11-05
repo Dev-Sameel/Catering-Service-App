@@ -35,8 +35,8 @@ class CustomTextField extends StatelessWidget {
     this.controller,
     this.showHintText = true,
     this.showLabel = false,
-    this.enableColor = cFire,
-    this.focusColor = bFire,
+    this.enableColor = kWhite,
+    this.focusColor = kBlack,
     this.textColor = kWhite,
     this.length,
     this.icon,
@@ -108,7 +108,7 @@ class CustomTextField extends StatelessWidget {
                           "${authController.selectedCountry.value.flagEmoji} + ${authController.selectedCountry.value.phoneCode}",
                           style: const TextStyle(
                             fontSize: 14,
-                            color: Colors.grey,
+                            color: kWhite,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -137,7 +137,7 @@ class CustomTextField extends StatelessWidget {
             isDense: true,
             hintText: showHintText ? label : null,
             hintStyle: TextStyle(
-              color: textColor,
+              color: textColor.withOpacity(0.8),
             ),
             border:
                 OutlineInputBorder(borderRadius: BorderRadius.circular(50))),
@@ -145,3 +145,6 @@ class CustomTextField extends StatelessWidget {
     });
   }
 }
+
+
+

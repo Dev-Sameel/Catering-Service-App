@@ -9,7 +9,7 @@ import 'second_dialogbox.dart';
 import 'tile_text.dart';
 
 Future<dynamic> workDialogBoxFirst(
-    AddWorkModel data, String uId, String workId) {
+    AddWorkModel data, String? uId, String? workId) {
   return Get.defaultDialog(
       radius: 6,
       title: "Work Details",
@@ -18,9 +18,10 @@ Future<dynamic> workDialogBoxFirst(
       middleTextStyle:
           const TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
       actions: [
-        Padding(
-          padding: const EdgeInsets.all(10),
+        Container(
+          constraints: BoxConstraints(maxWidth: Get.width * 0.8),
           child: Column(
+            mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               doubleText('Location', data.siteLocation),
@@ -29,17 +30,18 @@ Future<dynamic> workDialogBoxFirst(
               doubleText('Type', data.workType),
               doubleText('Boys Count', data.boysCount.toString()),
               sBoxH20(),
-              Row(
+               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: [
+                children:uId!=null? [
                   confirmButton('Cancel', kBlack, kWhite, null),
                   sBoxW10(),
                   confirmButton('Next', kBlack, kWhite, () async {
                     Get.back();
-                    await workDialogBoxSecond(uId, workId);
+                    await workDialogBoxSecond(uId, workId!);
                   }),
-                ],
+                ]:[]
               )
+              
             ],
           ),
         )

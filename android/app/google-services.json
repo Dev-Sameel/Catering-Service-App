@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "46246878672",
+    "project_id": "cateringwork-48d53",
+    "storage_bucket": "cateringwork-48d53.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:46246878672:android:2e121a05593fa8b35cedd5",
+        "android_client_info": {
+          "package_name": "com.example.catering"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDYjN-VCxrrDEoIAjagnyuMIyeHuQGTYWo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

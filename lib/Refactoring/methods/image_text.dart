@@ -6,9 +6,9 @@ import '../styles/colors.dart';
 import 'sizedbox.dart';
 import 'tile_text.dart';
 
-Container imageNtext(String text, String image,double imageWidth) {
+Container imageNtext(String text, String image,double imageWidth,double height) {
   return Container(
-    height: 60,
+    height: height,
     margin: const EdgeInsets.only(left: 35),
     child: Row(
       children: [
@@ -17,7 +17,7 @@ Container imageNtext(String text, String image,double imageWidth) {
           width: imageWidth,
         ),
         sBoxW10(),
-        tileText(text, 20, FontWeight.normal, kBlack),
+        Expanded(child: tileText(text, 20, FontWeight.normal, kBlack)),
       ],
     ),
   );

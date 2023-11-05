@@ -10,7 +10,7 @@ class CustomDatePicker extends StatelessWidget {
   final String label;
 final DatePickerController controller=Get.put(DatePickerController());
 
-  CustomDatePicker({required this.label, Key? key}) : super(key: key);
+  CustomDatePicker({ required this.label, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -52,12 +52,12 @@ final DatePickerController controller=Get.put(DatePickerController());
             }
           },
          child: Obx(() => Container(
-            height: 50,
+            margin: EdgeInsets.only(bottom: 19),
             // width: double.infinity,
             decoration: BoxDecoration(
               color: kBlack
         .withOpacity(0.3),
-              border: Border.all(color: cFire),
+              border: Border.all(color: kWhite,width: 1.5),
               borderRadius: const BorderRadius.only(topLeft: Radius.circular(50),topRight: Radius.circular(50),bottomRight: Radius.circular(50)),
             ),
             child: Container(
@@ -71,7 +71,7 @@ final DatePickerController controller=Get.put(DatePickerController());
                         controller.selectedDate.value == null
                             ? label
                             : parseDateDrop(controller.selectedDate.value!),
-                        style: const TextStyle(color: kWhite, fontSize: 16),
+                        style:  TextStyle(color:controller.selectedDate.value == null? kWhite.withOpacity(0.8):kWhite, fontSize: 16),
                       ),
                     ),
                   ),
