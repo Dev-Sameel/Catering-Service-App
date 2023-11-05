@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -13,7 +12,7 @@ class SplashScreen extends StatelessWidget {
     return GetBuilder<SplashController>(
       init: SplashController(),
       builder: (controller) {
-        return Scaffold(
+        return const Scaffold(
           backgroundColor: bgColor,
           body: SizedBox(
             width: double.infinity,

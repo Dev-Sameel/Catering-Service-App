@@ -1,4 +1,3 @@
-import 'package:catering/Refactoring/widgets/others.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -33,10 +32,10 @@ editPassword(BuildContext context, String uID) {
     context: context,
     builder: (context) {
       return AlertDialog(
-        contentPadding: EdgeInsets.all(10.0),
+        contentPadding: const EdgeInsets.all(10.0),
         backgroundColor: kTransperant,
         content: Container(
-          padding: EdgeInsets.all(10),
+          padding: const EdgeInsets.all(10),
           decoration: BoxDecoration(
             gradient: orangeGradient,
             borderRadius: BorderRadius.circular(20.0),

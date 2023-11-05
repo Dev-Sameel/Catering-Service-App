@@ -44,7 +44,7 @@ class SplashController extends GetxController {
       final userId=sharedPrefs.getString('uID');
       userLogged == 'bHome'
           ? Get.offAll(() => HomeScreen(uID: userId,))
-          : Get.offAll(() => AHomePage());
+          : Get.offAll(() => const AHomePage());
     }
   }
 }

@@ -1,7 +1,6 @@
 import 'dart:developer';
 
 import 'package:catering/Refactoring/methods/others.dart';
-import 'package:catering/Refactoring/widgets/others.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -10,7 +9,6 @@ import '../firebase/variables.dart';
 import '../styles/colors.dart';
 import '../widgets/elevated_button.dart';
 import '../widgets/text_field.dart';
-import 'sizedbox.dart';
 
 Future addBusFire(
     String? uID, int? index, int value, BuildContext context) async {
@@ -21,6 +19,7 @@ Future addBusFire(
   await userRegCollection
       .doc(uID)
       .update({'confirmedWork': currentConfirmedWorks});
+  // ignore: use_build_context_synchronously
   Navigator.pop(context);
 }
 
@@ -33,7 +32,7 @@ baseFareDialog(BuildContext context, String? uID, int? index) {
     context: context,
     builder: (context) {
       return AlertDialog(
-        contentPadding: EdgeInsets.all(0),
+        contentPadding: const EdgeInsets.all(0),
         backgroundColor: kTransperant,
         content:  Container(
          height: 250,

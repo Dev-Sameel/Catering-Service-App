@@ -9,7 +9,7 @@ class UiHelper{
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-           CircularProgressIndicator(),
+           const CircularProgressIndicator(),
            sBoxH20(),
            Text(title),
         ],
@@ -28,7 +28,7 @@ class UiHelper{
       actions: [
         TextButton(onPressed: (){
           Get.back();
-        }, child: Text('Ok'))
+        }, child: const Text('Ok'))
       ],
     );
 

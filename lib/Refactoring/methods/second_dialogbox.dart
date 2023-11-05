@@ -13,7 +13,7 @@ import 'sizedbox.dart';
 
 Future<void> addConfirmedWork(
     List<String> workIds, String uId, String workId) async {
-  final workRef = await addWorkCollection.doc(workId);
+  final workRef = addWorkCollection.doc(workId);
   final DocumentReference userSkillsDoc =
       FirebaseFirestore.instance.collection('User Reg').doc(uId);
 
@@ -50,7 +50,7 @@ Future<void> addConfirmedWork(
         log('Boys count is already at zero.');
       }
     } else {
-      print('Document with ID $workId does not exist.');
+      log('Document with ID $workId does not exist.');
     }
 
     Get.back(); // Assuming you are using GetX for navigation

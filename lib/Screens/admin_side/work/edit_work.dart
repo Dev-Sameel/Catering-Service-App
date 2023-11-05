@@ -6,7 +6,6 @@ import 'dart:developer';
 
 import 'package:catering/Refactoring/widgets/others.dart';
 import 'package:catering/Screens/admin_side/work/work_history.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../../../Refactoring/firebase/variables.dart';
 import '../../../Refactoring/methods/app_bar_cuper.dart';
@@ -63,7 +62,7 @@ class EditWork extends StatelessWidget {
 
   Future addWorkToFireStore() async {
     final  workRef=await addWorkCollection.doc(id).get();
-    final workData=await workRef.data();
+    final workData= workRef.data();
     log('vacccaaacac${workData!['vacancy'].toString()}');
     log('boysssssss${workData['boysCount'].toString()}');
 

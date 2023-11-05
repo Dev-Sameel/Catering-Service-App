@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:catering/Refactoring/methods/others.dart';
 import 'package:catering/Refactoring/widgets/others.dart';
@@ -7,7 +6,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../Refactoring/methods/image_text.dart';
-import '../../../Refactoring/methods/tile_text.dart';
 import '../../../Refactoring/styles/colors.dart';
 import '../edit_boys_profile.dart';
 
@@ -112,7 +110,7 @@ class MyProfile extends StatelessWidget {
       body: Stack(
         children: [
           Container(
-            color: Color.fromARGB(255, 255, 192, 192).withOpacity(0.5),
+            color: const Color.fromARGB(255, 255, 192, 192).withOpacity(0.5),
             height: mHight * 0.36,
           ),
           Column(
@@ -134,14 +132,14 @@ class MyProfile extends StatelessWidget {
                         ProfileContainer(
                           bLeft: 0,
                           bRight: 300,
-                          color: Color.fromARGB(255, 255, 192, 192)
+                          color: const Color.fromARGB(255, 255, 192, 192)
                               .withOpacity(0.5),
                           mHeight: mHight * 0.42,
                         ),
                         ProfileContainer(
                           bLeft: 200,
                           bRight: 0,
-                          color: Color.fromARGB(255, 189, 201, 255)
+                          color: const Color.fromARGB(255, 189, 201, 255)
                               .withOpacity(0.5),
                           mHeight: mHight * 0.35,
                         ),
@@ -153,8 +151,8 @@ class MyProfile extends StatelessWidget {
                 decoration: BoxDecoration(
                     gradient: LinearGradient(
                         colors: [
-                      Color.fromARGB(255, 189, 201, 255).withOpacity(0.5),
-                      Color.fromARGB(255, 255, 192, 192).withOpacity(0.5)
+                      const Color.fromARGB(255, 189, 201, 255).withOpacity(0.5),
+                      const Color.fromARGB(255, 255, 192, 192).withOpacity(0.5)
                     ],
                         begin: Alignment.bottomCenter,
                         end: AlignmentDirectional.topCenter)),

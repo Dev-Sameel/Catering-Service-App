@@ -1,13 +1,11 @@
 import 'dart:developer';
 import 'dart:io';
 
-import 'package:catering/Refactoring/methods/sizedbox.dart';
 import 'package:catering/Screens/boys_side/home.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+
 import '../../../Refactoring/firebase/variables.dart';
 import '../../../Refactoring/methods/app_bar_cuper.dart';
 import '../../../Refactoring/methods/image_text.dart';
@@ -22,8 +20,8 @@ import '../../../controller/date_picker.dart';
 import '../../../controller/dropdown_controller.dart';
 import '../../../controller/image_controller.dart';
 import '../../../model/user.dart';
-import '../main_screens/login_page/login_page.dart';
 
+// ignore: must_be_immutable
 class EditBoysProfile extends StatelessWidget {
   String uId;
   String name;

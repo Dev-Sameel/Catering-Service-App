@@ -1,6 +1,5 @@
 import 'dart:developer';
 
-import 'package:catering/Refactoring/methods/app_bar_cuper.dart';
 import 'package:catering/Refactoring/methods/image_text.dart';
 import 'package:catering/Refactoring/methods/sizedbox.dart';
 import 'package:catering/Refactoring/styles/colors.dart';
@@ -60,8 +59,6 @@ class ChatRoomPage extends StatelessWidget {
   final messageControll = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    final mHeight = MediaQuery.of(context).size.height;
-    final mWidth = MediaQuery.of(context).size.width;
     final ChatController chatController = Get.put(ChatController());
     return Scaffold(
         backgroundColor: bgColor,
@@ -75,7 +72,7 @@ class ChatRoomPage extends StatelessWidget {
                 color: kWhite,
                 size: 35,
               )),
-          backgroundColor: Color.fromARGB(255, 44, 43, 42),
+          backgroundColor: const Color.fromARGB(255, 44, 43, 42),
           title: Row(
             children: [
               CircleAvatar(
@@ -166,7 +163,7 @@ class ChatRoomPage extends StatelessWidget {
                                                 TextSpan(
                                                   text: currentMessage.text
                                                       .toString(),
-                                                  style: TextStyle(
+                                                  style: const TextStyle(
                                                     fontSize: 16,
                                                     color:
                                                         kWhite, // Set the text color to red
@@ -175,7 +172,7 @@ class ChatRoomPage extends StatelessWidget {
                                                 ),
                                                 TextSpan(
                                                   text: dateLength,
-                                                  style: TextStyle(
+                                                  style: const TextStyle(
                                                     fontSize: 16,
                                                     color:
                                                         kTransperant, // Set the text color to black
@@ -193,7 +190,7 @@ class ChatRoomPage extends StatelessWidget {
                                               Text(
                                                 parseDateDrop(
                                                     currentMessage.createDon!),
-                                                style: TextStyle(
+                                                style: const TextStyle(
                                                     fontSize: 12,
                                                     color: kWhite),
                                               ),
@@ -232,7 +229,7 @@ class ChatRoomPage extends StatelessWidget {
                   },
                 )),
                 Container(
-                  margin: EdgeInsets.only(left: 20, right: 20, top: 10),
+                  margin: const EdgeInsets.only(left: 20, right: 20, top: 10),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(25),
                     color: kWhite,
@@ -262,7 +259,7 @@ class ChatRoomPage extends StatelessWidget {
                       right: 25,
                       child: Container(
                         width: 50,
-                        decoration: BoxDecoration(
+                        decoration: const BoxDecoration(
                             shape: BoxShape
                                 .circle, // You can use a different shape if desired
                             gradient: youGradient,
@@ -272,7 +269,7 @@ class ChatRoomPage extends StatelessWidget {
                         padding: const EdgeInsets.all(
                             8), // Adjust the padding as needed
                         child: IconButton(
-                          icon: Icon(
+                          icon: const Icon(
                               Icons.send), // Replace with your desired icon
                           onPressed: () {
                             sendMessage();

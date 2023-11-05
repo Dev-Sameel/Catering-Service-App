@@ -14,7 +14,6 @@ import '../../../Refactoring/widgets/elevated_button.dart';
 import '../../../Refactoring/widgets/text_field.dart';
 import '../../../controller/authontication_controll.dart';
 import '../../admin_side/a_home.dart';
-import '../../boys_side/boy_reg.dart';
 import '../../boys_side/home.dart';
 
 class LoginPage extends StatelessWidget {

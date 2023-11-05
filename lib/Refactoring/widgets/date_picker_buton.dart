@@ -52,7 +52,7 @@ final DatePickerController controller=Get.put(DatePickerController());
             }
           },
          child: Obx(() => Container(
-            margin: EdgeInsets.only(bottom: 19),
+            margin: const EdgeInsets.only(bottom: 19),
             // width: double.infinity,
             decoration: BoxDecoration(
               color: kBlack

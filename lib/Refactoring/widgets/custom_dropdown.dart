@@ -15,7 +15,7 @@ class CustomDropDown extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       // width: double.infinity,
-      margin: EdgeInsets.only(bottom: 19),
+      margin: const EdgeInsets.only(bottom: 19),
       decoration: BoxDecoration(
         color: kBlack
         .withOpacity(0.3),
@@ -37,7 +37,7 @@ class CustomDropDown extends StatelessWidget {
                     onChanged: (value) {
                       controller.updateSelectedValue(value);
                     },
-                    dropdownColor: Color.fromARGB(255, 85, 22, 2),
+                    dropdownColor: const Color.fromARGB(255, 85, 22, 2),
                     iconEnabledColor: kWhite,
                     borderRadius: BorderRadius.circular(10),
                     underline: const SizedBox(),

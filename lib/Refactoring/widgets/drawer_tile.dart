@@ -1,6 +1,5 @@
 import 'dart:developer';
 
-import 'package:catering/Refactoring/methods/others.dart';
 import 'package:catering/main.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
@@ -18,6 +17,7 @@ import '../styles/colors.dart';
 
 // ignore: must_be_immutable
 class DrawerTile extends StatelessWidget {
+  // ignore: prefer_typing_uninitialized_variables
   var userData;
   final String adminId = 'wzaxXP0cddR3k9KXVmsV';
   String? uId;
@@ -38,11 +38,11 @@ class DrawerTile extends StatelessWidget {
     ChatRoomModel? chatRoom;
     QuerySnapshot snapshot = await FirebaseFirestore.instance
         .collection('chatRooms')
-        .where('participants.${adminId}', isEqualTo: true)
-        .where('participants.${userId}', isEqualTo: true)
+        .where('participants.$adminId', isEqualTo: true)
+        .where('participants.$userId', isEqualTo: true)
         .get();
 
-    if (snapshot.docs.length > 0) {
+    if (snapshot.docs.isNotEmpty) {
       log('ChatRoom Already Created');
       var docData = snapshot.docs[0].data();
       ChatRoomModel existingChatRoom =

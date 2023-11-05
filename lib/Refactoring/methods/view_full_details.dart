@@ -1,8 +1,6 @@
 
 
-import 'dart:developer';
 
-import 'package:catering/Refactoring/methods/others.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -38,7 +36,7 @@ Future<dynamic> viewFullDetails(AddWorkModel data,int? index,String? uid) async{
                
                 children: [
                 tileText('Location :', 19, FontWeight.w500, kBlack),
-               data.locationMap=='Location Not Added'?Text(' Map Not Added',style: TextStyle(color: kRed),): IconButton(onPressed: (){
+               data.locationMap=='Location Not Added'?const Text(' Map Not Added',style: TextStyle(color: kRed),): IconButton(onPressed: (){
                   
              
                 // ignore: deprecated_member_use

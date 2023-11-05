@@ -201,7 +201,7 @@ class _BoysHistoryState extends State<BoysHistory> {
                               }
                             },
                             child: Container(
-                              margin: EdgeInsets.all(15),
+                              margin: const EdgeInsets.all(15),
                               decoration: BoxDecoration(
                                   color: bgColor, boxShadow: contShadow()),
                               child: Column(

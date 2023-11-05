@@ -19,16 +19,18 @@ Future<void> main() async {
     
     DevicePreview(
       enabled: true,
-      builder:(context) => MyApp(),));
+      builder:(context) => const MyApp(),));
 
    
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     
-    return GetMaterialApp(
+    return const GetMaterialApp(
       title: 'Flutter Demo',
       home: SplashScreen(),
       debugShowCheckedModeBanner: false,

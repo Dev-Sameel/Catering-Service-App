@@ -125,7 +125,7 @@ class ConfireButton extends StatelessWidget {
     final mWidth = MediaQuery.of(context).size.width;
     final mHeight = MediaQuery.of(context).size.height;
     return Container(
-      margin: EdgeInsets.only(bottom: 19),
+      margin: const EdgeInsets.only(bottom: 19),
       decoration: BoxDecoration(
         
           color: bgColor, borderRadius: BorderRadius.circular(50)),

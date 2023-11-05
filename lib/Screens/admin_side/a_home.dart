@@ -68,7 +68,7 @@ class AHomePage extends StatelessWidget {
                 radius: 10,
                   label: 'Boys History',
                   onChanged: () {
-                    Get.to(() => BoysHistory());
+                    Get.to(() => const BoysHistory());
                   },
                 );
               }
