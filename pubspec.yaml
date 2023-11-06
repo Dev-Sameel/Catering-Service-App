@@ -58,6 +58,9 @@ dependencies:
   intro_slider: ^4.2.1
   device_preview: ^1.1.0
   uuid: ^4.1.0
+  flutter_automation: ^2.0.0
+  share_plus: ^7.2.1
+  permission_handler: ^11.0.1
  
   
 
@@ -120,6 +123,11 @@ flutter:
     - assets/images/lock.png
     - assets/images/Icons/name.png
     - assets/images/Icons/blood.png
+    - assets/images/Icons/about.png
+    - assets/images/foodpilotIcon.jpg
+    - assets/images/frameIcons/share.png
+    - assets/images/frameIcons/star.png
+    - assets/images/frameIcons/instagram.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

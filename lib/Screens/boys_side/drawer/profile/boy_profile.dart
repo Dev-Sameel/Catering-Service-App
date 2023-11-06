@@ -5,9 +5,9 @@ import 'package:catering/model/user.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../../Refactoring/methods/image_text.dart';
-import '../../../Refactoring/styles/colors.dart';
-import '../edit_boys_profile.dart';
+import '../../../../Refactoring/methods/image_text.dart';
+import '../../../../Refactoring/styles/colors.dart';
+import 'edit_boys_profile.dart';
 
 // ignore: must_be_immutable
 class MyProfile extends StatelessWidget {
@@ -161,14 +161,14 @@ class MyProfile extends StatelessWidget {
                   child: ListView(
                     children: [
                       imageNtext(capitalize(name),
-                          'assets/images/Icons/name.png', 45, 60),
+                          'assets/images/Icons/name.png', 45, 60,null),
                       imageNtext(
-                          '$mobile', 'assets/images/Icons/phone.png', 45, 60),
-                      imageNtext(dob, 'assets/images/Icons/birth.png', 45, 60),
+                          '$mobile', 'assets/images/Icons/phone.png', 45, 60,null),
+                      imageNtext(dob, 'assets/images/Icons/birth.png', 45, 60,null),
                       imageNtext(
-                          bloodGroup, 'assets/images/Icons/blood.png', 45, 60),
+                          bloodGroup, 'assets/images/Icons/blood.png', 45, 60,null),
                       imageNtext(capitalize(address),
-                          'assets/images/Icons/address.png', 45, 80)
+                          'assets/images/Icons/address.png', 45, 80,null)
                     ],
                   ),
                 ),

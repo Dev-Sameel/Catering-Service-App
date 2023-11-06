@@ -1,10 +1,13 @@
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:catering/Refactoring/methods/tile_text.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:permission_handler/permission_handler.dart';
 import '../../../Refactoring/firebase/variables.dart';
 import '../../../Refactoring/methods/app_bar_cuper.dart';
 import '../../../Refactoring/methods/image_text.dart';
@@ -23,7 +26,7 @@ import '../main_screens/otp.dart';
 import '../main_screens/login_page/login_page.dart';
 
 class RegistrationScreen extends StatelessWidget {
-    // ignore: non_constant_identifier_names
+  // ignore: non_constant_identifier_names
   final AuthenticationControll AuthControll = Get.put(AuthenticationControll());
   final TextEditingController nameController = TextEditingController();
   final TextEditingController addressController = TextEditingController();
@@ -33,13 +36,13 @@ class RegistrationScreen extends StatelessWidget {
 
   final ImagePickerController controller = Get.put(ImagePickerController());
   final DatePickerController dateController = Get.put(DatePickerController());
-  final CustomDropDownController dropDownController = Get.put(CustomDropDownController());
+  final CustomDropDownController dropDownController =
+      Get.put(CustomDropDownController());
 
-    Future addBoyData() async {
+  Future addBoyData() async {
     log('hi');
     String downloadURL = await controller.uploadImageToFirebase();
     var addUserData = UserData(
-     
       photo: downloadURL,
       name: nameController.text,
       address: addressController.text,
@@ -49,25 +52,25 @@ class RegistrationScreen extends StatelessWidget {
       password: int.parse(passwordController.text),
     );
 
-       DocumentReference docRef = await userRegCollection.add(addUserData.toJson());
-  // Update the id field in addUserData with the generated document ID
-  await docRef.update({'id': docRef.id});
+    DocumentReference docRef =
+        await userRegCollection.add(addUserData.toJson());
+    // Update the id field in addUserData with the generated document ID
+    await docRef.update({'id': docRef.id});
 
-  // Now addUserData contains the generated ID
-  addUserData.id = docRef.id;
-    Get.offAll(()=>LoginPage());
+    // Now addUserData contains the generated ID
+    addUserData.id = docRef.id;
+    Get.offAll(() => LoginPage());
   }
 
   RegistrationScreen({super.key});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: bgColor,
+        backgroundColor: bgColor,
         appBar: customAppBar(null, null, null, 'REGISTRATION'),
         body: Container(
           decoration: BoxDecoration(
-            gradient:orangeGradient
-            ,
+            gradient: orangeGradient,
             borderRadius: BorderRadius.circular(20.0),
             boxShadow: [
               BoxShadow(
@@ -79,25 +82,21 @@ class RegistrationScreen extends StatelessWidget {
           ),
           padding: const EdgeInsets.all(20.0),
           margin: const EdgeInsets.all(20.0),
-          child:  Column(
+          child: Column(
             children: [
               Obx(() {
                 return Stack(
                   alignment: Alignment.center,
                   children: [
-              
                     controller.image.value.path == ''
                         ? Container(
                             margin: const EdgeInsets.only(bottom: 20),
-                            decoration:  BoxDecoration(
-                              
-                              border: Border.all(color: kWhite,width: 3),
+                            decoration: BoxDecoration(
+                              border: Border.all(color: kWhite, width: 3),
                               boxShadow: const [
                                 BoxShadow(
-                                 
-                                  blurRadius: 10,
-                                  color: Color.fromARGB(255, 134, 62, 40)
-                                ),
+                                    blurRadius: 10,
+                                    color: Color.fromARGB(255, 134, 62, 40)),
                               ],
                               shape: BoxShape.circle,
                             ),
@@ -116,15 +115,12 @@ class RegistrationScreen extends StatelessWidget {
                           )
                         : Container(
                             margin: const EdgeInsets.only(bottom: 20),
-                            decoration:  BoxDecoration(
-                              border:  Border.all(color: kWhite,width: 3),
+                            decoration: BoxDecoration(
+                              border: Border.all(color: kWhite, width: 3),
                               boxShadow: const [
                                 BoxShadow(
-                                 
-                                  
-                                  blurRadius: 10,
-                                  color: Color.fromARGB(255, 134, 62, 40)
-                                ),
+                                    blurRadius: 10,
+                                    color: Color.fromARGB(255, 134, 62, 40)),
                               ],
                               shape: BoxShape.circle,
                             ),
@@ -145,8 +141,17 @@ class RegistrationScreen extends StatelessWidget {
                       bottom: 20,
                       right: 0,
                       child: IconButton(
-                          onPressed: () {
-                            controller.getImage();
+                          onPressed: () async {
+                            Map<Permission, PermissionStatus> statuses = await [
+                              Permission.storage,
+                              Permission.camera,
+                            ].request();
+                            if (statuses[Permission.storage]!.isGranted &&
+                                statuses[Permission.camera]!.isGranted) {
+                              imageSourcePicker();
+                            } else {
+                              log('no permission provided');
+                            }
                           },
                           icon: const Icon(
                             Icons.add_a_photo,
@@ -160,7 +165,6 @@ class RegistrationScreen extends StatelessWidget {
                             ],
                           )),
                     ),
-                    
                   ],
                 );
               }),
@@ -170,28 +174,27 @@ class RegistrationScreen extends StatelessWidget {
                   child: ScrollConfiguration(
                     behavior: RemoveGlow(),
                     child: ListView(
-                          itemExtent: 70.0,
-        shrinkWrap: true,
+                      itemExtent: 70.0,
+                      shrinkWrap: true,
                       children: [
                         CustomTextField(
-                          enableColor: kWhite,
-                          focusColor: kBlack,
-                          
-                          fiilColor: kBlack
-                        .withOpacity(0.3),
+                            enableColor: kWhite,
+                            focusColor: kBlack,
+                            fiilColor: kBlack.withOpacity(0.3),
                             label: 'Name',
                             controller: nameController,
                             icon: Icons.person),
                         CustomTextField(
                           enableColor: kWhite,
                           focusColor: kBlack,
-                          fiilColor: kBlack
-                        .withOpacity(0.3),
+                          fiilColor: kBlack.withOpacity(0.3),
                           label: 'Address',
                           controller: addressController,
                           icon: Icons.location_pin,
                         ),
-                        CustomDatePicker(label: 'Date Of Birth',),
+                        CustomDatePicker(
+                          label: 'Date Of Birth',
+                        ),
                         CustomDropDown(
                             label: 'Select Blood Group',
                             menuItems: const [
@@ -207,8 +210,7 @@ class RegistrationScreen extends StatelessWidget {
                         CustomTextField(
                           enableColor: kWhite,
                           focusColor: kBlack,
-                          fiilColor: kBlack
-                        .withOpacity(0.3),
+                          fiilColor: kBlack.withOpacity(0.3),
                           checkValue: 'phoneAuth',
                           icon: Icons.phone,
                           label: 'Mobile Number',
@@ -219,8 +221,7 @@ class RegistrationScreen extends StatelessWidget {
                         CustomTextField(
                           enableColor: kWhite,
                           focusColor: kBlack,
-                          fiilColor: kBlack
-                        .withOpacity(0.3),
+                          fiilColor: kBlack.withOpacity(0.3),
                           icon: Icons.lock,
                           label: 'Password',
                           length: 5,
@@ -256,9 +257,10 @@ class RegistrationScreen extends StatelessWidget {
                         //   },
                         //   child: const Text('Add'),
                         // ),
-                        ConfireButton(label: 'ADD', onChanged:() async{
-                           if (
-                              controller.image.value.path != '' &&
+                        ConfireButton(
+                          label: 'ADD',
+                          onChanged: () async {
+                            if (controller.image.value.path != '' &&
                                 nameController.text.isNotEmpty &&
                                 addressController.text.isNotEmpty &&
                                 dateController.selectedDate.value != null &&
@@ -280,9 +282,8 @@ class RegistrationScreen extends StatelessWidget {
                                   'Please fill all fields and select an image',
                                   backgroundColor: kWhite);
                             }
-                                
-                                
-                        }, )
+                          },
+                        )
                       ],
                     ),
                   ),
@@ -292,50 +293,102 @@ class RegistrationScreen extends StatelessWidget {
           ),
         ));
   }
-}
 
-  Future<void> signInWithPhoneNumber(
-    String phoneNumber,
-    String image,
-    String name,
-    String address,
-    DateTime date,
-    String dropdown,
-    String mobile,
-    String password,
-  ) async {
-    log(phoneNumber);
-    FirebaseAuth auth = FirebaseAuth.instance;
-
-    await auth.verifyPhoneNumber(
-      phoneNumber: phoneNumber,
-      verificationCompleted: (PhoneAuthCredential credential) async {
-        await auth.signInWithCredential(credential);
-      },
-      verificationFailed: (FirebaseAuthException e) {},
-      codeSent: (String verificationId, int? resendToken) async {
-        String smsCode = '';
-        PhoneAuthCredential credential = PhoneAuthProvider.credential(
-          verificationId: verificationId,
-          smsCode: smsCode,
-        );
-        Get.to(()=>
-            OtpPage(
-                date: date,
-                address: address,
-                dropdown: dropdown,
-                image: image,
-                mobile: mobile,
-                name: name,
-                password: password,
-                phoneNumber: phoneNumber),
-            arguments: [verificationId]);
-        await auth.signInWithCredential(credential);
-      },
-      codeAutoRetrievalTimeout: (String verificationId) {},
+  void imageSourcePicker() {
+    Get.bottomSheet(
+      Container(
+        height: 250,
+        decoration: const BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(10),
+            topRight: Radius.circular(10),
+          ),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.only(top: 20),
+          child: Column(
+            children: [
+              tileText('Upload Profile Picture', 20, FontWeight.w500, kBlack),
+              Expanded(
+                child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      ListTile(
+                        title: const Column(
+                          children: [
+                            Icon(
+                              Icons.photo_album,
+                              size: 45,
+                            ),
+                            Text('Select from Gallary'),
+                          ],
+                        ),
+                        onTap: () async =>
+                            await controller.getImage(ImageSource.gallery),
+                      ),
+                      ListTile(
+                        title: const Column(
+                          children: [
+                            Icon(
+                              Icons.camera_alt,
+                              size: 47,
+                            ),
+                            Text('Take a photo'),
+                          ],
+                        ),
+                        onTap: () async =>
+                            await controller.getImage(ImageSource.camera),
+                      ),
+                    ]),
+              ),
+            ],
+          ),
+        ),
+      ),
+      isScrollControlled: true,
     );
   }
+}
 
-  
+Future<void> signInWithPhoneNumber(
+  String phoneNumber,
+  String image,
+  String name,
+  String address,
+  DateTime date,
+  String dropdown,
+  String mobile,
+  String password,
+) async {
+  log(phoneNumber);
+  FirebaseAuth auth = FirebaseAuth.instance;
 
-
+  await auth.verifyPhoneNumber(
+    phoneNumber: phoneNumber,
+    verificationCompleted: (PhoneAuthCredential credential) async {
+      await auth.signInWithCredential(credential);
+    },
+    verificationFailed: (FirebaseAuthException e) {},
+    codeSent: (String verificationId, int? resendToken) async {
+      String smsCode = '';
+      PhoneAuthCredential credential = PhoneAuthProvider.credential(
+        verificationId: verificationId,
+        smsCode: smsCode,
+      );
+      Get.to(
+          () => OtpPage(
+              date: date,
+              address: address,
+              dropdown: dropdown,
+              image: image,
+              mobile: mobile,
+              name: name,
+              password: password,
+              phoneNumber: phoneNumber),
+          arguments: [verificationId]);
+      await auth.signInWithCredential(credential);
+    },
+    codeAutoRetrievalTimeout: (String verificationId) {},
+  );
+}

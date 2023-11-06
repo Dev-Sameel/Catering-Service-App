@@ -9,16 +9,17 @@ import 'package:image_picker/image_picker.dart';
 class ImagePickerController extends GetxController {
   Rx<String> networkImageUrl = ''.obs;
   Rx<File> image = File('').obs;
-  Future getImage() async {
+  Future getImage(ImageSource source) async {
     try {
       final imagePick =
-          await ImagePicker().pickImage(source: ImageSource.gallery);
+          await ImagePicker().pickImage(source: source);
 
       if (imagePick == null) {
         return;
       }
       final imagTemp = File(imagePick.path);
       image.value = imagTemp;
+      Get.back();
       log(imagTemp.toString());
     } on PlatformException catch (e) {
       return e;

@@ -90,6 +90,7 @@ class HomeScreen extends StatelessWidget {
       'Edit Password',
       'Leave Form',
       'Chat',
+      'About',
       'Logout',
     ];
     List<String> imagePaths = [
@@ -98,6 +99,7 @@ class HomeScreen extends StatelessWidget {
       'assets/images/Icons/editpass.png',
       'assets/images/Icons/leave.png',
       'assets/images/Icons/chat.png',
+      'assets/images/Icons/about.png',
       'assets/images/Icons/logout.png',
     ];
     return Scaffold(
@@ -107,48 +109,60 @@ class HomeScreen extends StatelessWidget {
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.done) {
               return Drawer(
-                width: 260,
+                width: MediaQuery.of(context).size.width*0.72,
                 child: Column(
                   children: [
-                    Container(
-                      margin: const EdgeInsets.only(bottom: 15),
+                    SizedBox(
                       width: double.infinity,
-                      height: 250,
+                      height: MediaQuery.of(context).size.height*0.35,
                       child: Image(
                         image: NetworkImage(data?['photo'] ?? ''),
                         fit: BoxFit.cover,
                       ),
                     ),
-                    DrawerTile(
-                      title: titleMessage[0],
-                      id: 1,
-                      imagePaths: imagePaths[0],
-                      data: data,
+                    Expanded(
+                      child: ScrollConfiguration(
+                          behavior: RemoveGlow(),
+                        child: ListView(
+                          children: [
+                            DrawerTile(
+                              title: titleMessage[0],
+                              id: 1,
+                              imagePaths: imagePaths[0],
+                              data: data,
+                            ),
+                            DrawerTile(
+                                uId: uID,
+                                title: titleMessage[1],
+                                id: 2,
+                                imagePaths: imagePaths[1]),
+                            DrawerTile(
+                                uId: uID,
+                                title: titleMessage[2],
+                                id: 3,
+                                imagePaths: imagePaths[2]),
+                            DrawerTile(
+                                title: titleMessage[3],
+                                id: 4,
+                                imagePaths: imagePaths[3]),
+                            DrawerTile(
+                                uId: uID,
+                                data: data,
+                                title: titleMessage[4],
+                                id: 5,
+                                imagePaths: imagePaths[4]),
+                            DrawerTile(
+                                imagePaths: imagePaths[5],
+                                id: 6,
+                                title: titleMessage[5]),
+                            DrawerTile(
+                                title: titleMessage[6],
+                                id: 7,
+                                imagePaths: imagePaths[6]),
+                          ],
+                        ),
+                      ),
                     ),
-                    DrawerTile(
-                        uId: uID,
-                        title: titleMessage[1],
-                        id: 2,
-                        imagePaths: imagePaths[1]),
-                    DrawerTile(
-                        uId: uID,
-                        title: titleMessage[2],
-                        id: 3,
-                        imagePaths: imagePaths[2]),
-                    DrawerTile(
-                        title: titleMessage[3],
-                        id: 4,
-                        imagePaths: imagePaths[3]),
-                    DrawerTile(
-                        uId: uID,
-                        data: data,
-                        title: titleMessage[4],
-                        id: 5,
-                        imagePaths: imagePaths[4]),
-                    DrawerTile(
-                        title: titleMessage[5],
-                        id: 6,
-                        imagePaths: imagePaths[5]),
                   ],
                 ),
               );
@@ -222,11 +236,8 @@ class HomeScreen extends StatelessWidget {
                                       FontWeight.w500, kWhite),
                                   tileText(capitalize(workDetails.teamName), 18,
                                       FontWeight.w500, kWhite),
-                                  tileText(
-                                      'Vacancy : ${workDetails.vacancy}',
-                                      18,
-                                      FontWeight.w500,
-                                      kWhite)
+                                  tileText('Vacancy : ${workDetails.vacancy}',
+                                      18, FontWeight.w500, kWhite)
                                 ],
                               ),
                               trailing: FittedBox(
@@ -237,7 +248,6 @@ class HomeScreen extends StatelessWidget {
                                         FontWeight.w500, kWhite),
                                     tileText(workDetails.siteTime, 18,
                                         FontWeight.w500, kWhite),
-                                   
                                   ],
                                 ),
                               ),

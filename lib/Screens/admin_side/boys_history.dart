@@ -19,7 +19,7 @@ import '../chat/screens/chat_room_page.dart';
 import '../../controller/boys_history_controller.dart';
 import '../../controller/image_controller.dart';
 import '../../main.dart';
-import '../boys_side/drawer/boy_profile.dart';
+import '../boys_side/drawer/profile/boy_profile.dart';
 
 class BoysHistory extends StatefulWidget {
   const BoysHistory({super.key});

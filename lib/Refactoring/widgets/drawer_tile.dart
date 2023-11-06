@@ -6,8 +6,9 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
+import '../../Screens/boys_side/drawer/about/about_screen.dart';
 import '../../Screens/boys_side/drawer/confirmed/confirmed.dart';
-import '../../Screens/boys_side/drawer/boy_profile.dart';
+import '../../Screens/boys_side/drawer/profile/boy_profile.dart';
 import '../../Screens/chat/model/chat_room_model.dart';
 import '../../Screens/chat/screens/chat_room_page.dart';
 import '../../model/user.dart';
@@ -84,7 +85,9 @@ class DrawerTile extends StatelessWidget {
     }
     return Column(
       children: [
+        
         ListTile(
+          
           leading: Image(
             image: AssetImage(imagePaths),
             width: 35,
@@ -129,7 +132,10 @@ class DrawerTile extends StatelessWidget {
                     adminId: adminId));
               }
               // Get.to(() => const AChat());
-            } else if (id == 6) {
+            } 
+            else if (id == 6) {
+              Get.to(()=>const AboutScreen());
+            }else if (id == 7) {
               logoutDialog();
             }
           },

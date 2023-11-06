@@ -4,22 +4,24 @@ import 'dart:io';
 import 'package:catering/Screens/boys_side/home.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 
-import '../../../Refactoring/firebase/variables.dart';
-import '../../../Refactoring/methods/app_bar_cuper.dart';
-import '../../../Refactoring/methods/image_text.dart';
-import '../../../Refactoring/styles/colors.dart';
-import '../../../Refactoring/widgets/custom_dropdown.dart';
-import '../../../Refactoring/widgets/date_picker_buton.dart';
-import '../../../Refactoring/widgets/elevated_button.dart';
-import '../../../Refactoring/widgets/others.dart';
-import '../../../Refactoring/widgets/text_field.dart';
-import '../../../controller/authontication_controll.dart';
-import '../../../controller/date_picker.dart';
-import '../../../controller/dropdown_controller.dart';
-import '../../../controller/image_controller.dart';
-import '../../../model/user.dart';
+import '../../../../../Refactoring/firebase/variables.dart';
+import '../../../../../Refactoring/methods/app_bar_cuper.dart';
+import '../../../../../Refactoring/methods/image_text.dart';
+import '../../../../../Refactoring/styles/colors.dart';
+import '../../../../../Refactoring/widgets/custom_dropdown.dart';
+import '../../../../../Refactoring/widgets/date_picker_buton.dart';
+import '../../../../../Refactoring/widgets/elevated_button.dart';
+import '../../../../../Refactoring/widgets/others.dart';
+import '../../../../../Refactoring/widgets/text_field.dart';
+import '../../../../../controller/authontication_controll.dart';
+import '../../../../../controller/date_picker.dart';
+import '../../../../../controller/dropdown_controller.dart';
+import '../../../../../controller/image_controller.dart';
+import '../../../../../model/user.dart';
+import '../../../../Refactoring/methods/tile_text.dart';
 
 // ignore: must_be_immutable
 class EditBoysProfile extends StatelessWidget {
@@ -198,7 +200,58 @@ class EditBoysProfile extends StatelessWidget {
                       right: 0,
                       child: IconButton(
                           onPressed: () {
-                            controller.getImage();
+                            Get.bottomSheet(
+                              Container(
+                                height: 250,
+                                decoration: const BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(10),
+                                    topRight: Radius.circular(10),
+                                  ),
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.only(top: 20),
+                                  child: Column(
+                                    children: [
+                                      tileText('Upload Profile Picture', 20,
+                                          FontWeight.w500, kBlack),
+                                       Expanded(
+                                        child: Column(
+                                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                            children: [
+                                              ListTile(
+                                                title: const Column(
+                                                  children: [
+                                                    Icon(Icons.photo_album,size: 45,),
+                                                    Text(
+                                                        'Select from Gallary'),
+                                                  ],
+                                                ),
+                                      
+                                                onTap: () => controller.getImage(ImageSource.gallery),
+                            
+
+                                              ),
+                                            ListTile(
+                                                title: const Column(
+                                                  children: [
+                                                    Icon(Icons.camera_alt,size: 47,),
+                                                    Text(
+                                                        'Select from Gallary'),
+                                                  ],
+                                                ),
+                                      
+                                                 onTap: () => controller.getImage(ImageSource.camera),
+                                              ),
+                                            ]),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              isScrollControlled: true,
+                            );
                           },
                           icon: const Icon(
                             Icons.add_a_photo,
@@ -285,7 +338,7 @@ class EditBoysProfile extends StatelessWidget {
                         //   child: const Text('Add'),
                         // ),
                         ConfireButton(
-                          label: 'ADD',
+                          label: 'UPDATE',
                           onChanged: () async {
                             if (nameController.text.isNotEmpty &&
                                 addressController.text.isNotEmpty &&

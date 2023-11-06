@@ -6,10 +6,10 @@ import '../styles/colors.dart';
 import 'sizedbox.dart';
 import 'tile_text.dart';
 
-Container imageNtext(String text, String image,double imageWidth,double height) {
+Container imageNtext(String text, String image,double imageWidth,double height,double? leftMarg) {
   return Container(
     height: height,
-    margin: const EdgeInsets.only(left: 35),
+    margin:  EdgeInsets.only(left: leftMarg??35),
     child: Row(
       children: [
         Image(
@@ -27,3 +27,6 @@ Container imageNtext(String text, String image,double imageWidth,double height) 
     final formatter = DateFormat('dd MMM yyyy');
     return formatter.format(date);
   }
+
+
+InkWell imageNtext2(String image,String title,VoidCallback onpressed,) =>  InkWell(onTap: onpressed,child: Row(children: [Image(image: AssetImage(image),width: 25,),sBoxW10(),tileText(title, 18, FontWeight.normal, kBlack)],));
